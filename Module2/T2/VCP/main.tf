@@ -22,6 +22,19 @@ provider "aws" {
     region = "eu-west-1"
 }
 
+
+# Search for the latest Amazon Linux 2 AMI in the specified region
+data "aws_ami" "amazon_linux" {
+    most_recent = true
+
+    owners = ["amazon"]
+
+    filter {
+        name   = "name"
+        values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    }
+}
+
 # Create a VPC with CIDR block and enable DNS support and hostnames
 resource "aws_vpc" "mi_vpc" {
     cidr_block              = "10.0.0.0/16"
@@ -310,7 +323,7 @@ resource "aws_network_acl_rule" "outbound_allow_all" {
             # └───────────────┘
 
 resource "aws_instance" "bastion" {
-    ami           = "ami-0c94855ba95c71c99" # Amazon Linux 
+    ami           = data.aws_ami.amazon_linux.id
     instance_type = "t2.micro"
     associate_public_ip_address = true # Asignate a public IP to the bastion host
 
@@ -320,7 +333,7 @@ resource "aws_instance" "bastion" {
         aws_security_group.bastion_sg.id
     ]
 
-    key_name = "mi-clave-ssh"
+    key_name = var.key_name_bastion
 
     tags = {
         Name = "bastion-host"
@@ -329,7 +342,7 @@ resource "aws_instance" "bastion" {
 
 
 resource "aws_instance" "private_ec2" {
-    ami           = "ami-0c94855ba95c71c99"
+    ami           = data.aws_ami.amazon_linux.id
     instance_type = "t2.micro"
 
     subnet_id = aws_subnet.private.id
@@ -338,9 +351,10 @@ resource "aws_instance" "private_ec2" {
         aws_security_group.private_ec2_sg.id
     ]
 
-    key_name = "mi-clave-ssh"
+    key_name = var.key_name_private
 
     tags = {
         Name = "private-server"
     }
 }
+
