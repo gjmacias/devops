@@ -64,5 +64,5 @@ output "private_route_table_id" {
 # SSH connection details for the bastion host
 output "ssh_bastion_command" {
     description = "SSH command for connecting to the bastion host"
-    value = "ssh -i ${var.key_name_bastion}.pem ec2-user@${aws_instance.bastion.public_ip}"
+    value = "ssh -i ${aws_key_pair.bastion.key_name}.pem ec2-user@${aws_instance.bastion.public_ip}"
 }
