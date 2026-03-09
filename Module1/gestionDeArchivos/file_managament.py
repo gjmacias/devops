@@ -58,19 +58,26 @@ def create_project_structure(project_name):
         os.path.join(project_name, "data", "raw"),
         os.path.join(project_name, "data", "processed"),
         os.path.join(project_name, "scripts"),
+        os.path.join(project_name, "docs"),
+    ]
+    # Lista de archivos a crear
+    files = [
         os.path.join(project_name, "scripts", "one.sh"),
         os.path.join(project_name, "scripts", "two.sh"),
         os.path.join(project_name, "scripts", "three.sh"),
-        os.path.join(project_name, "docs"),
         os.path.join(project_name, "docs", "one.txt"),
         os.path.join(project_name, "docs", "two.txt"),
         os.path.join(project_name, "docs", "three.txt"),
     ]
-
     # Crear directorios
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
         logging.info(f"Creado: {directory}")
+
+    #Crear archivos vacíos
+    for f in files:
+        with open(f, "w") as file:
+            file.write("")
     
     log_and_print("Genearción de archivos y directorios finalizada correctamente.", level="info")
 
