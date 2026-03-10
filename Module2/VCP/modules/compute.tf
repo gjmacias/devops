@@ -1,15 +1,3 @@
-# Search for the latest Amazon Linux 2 AMI in the specified region
-data "aws_ami" "amazon_linux" {
-    most_recent = true
-
-    owners = ["amazon"]
-
-    filter {
-        name   = "name"
-        values = ["amzn2-ami-hvm-*-x86_64-gp2"]
-    }
-}
-
             #     Internet
             #         │
             #  Internet Gateway
@@ -30,10 +18,9 @@ data "aws_ami" "amazon_linux" {
             # │  NACL rules   │
             # └───────────────┘
 
-
 # EC2 Instances, one in the public subnet (bastion host) and one in the private subnet
 resource "aws_instance" "bastion" {
-    ami           = data.aws_ami.amazon_linux.id
+    ami           = var.ami_id
     instance_type = var.instance_type
     associate_public_ip_address = true # Asignate a public IP to the bastion host
 
@@ -51,7 +38,7 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "private_ec2" {
-    ami           = data.aws_ami.amazon_linux.id
+    ami           = var.ami_id
     instance_type = var.instance_type
 
     subnet_id = aws_subnet.private.id

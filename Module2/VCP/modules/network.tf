@@ -37,7 +37,7 @@ resource "aws_vpc" "mi_vpc" {
 resource "aws_subnet" "public" {
     vpc_id                  = aws_vpc.mi_vpc.id
     cidr_block              = var.public_subnet_cidr
-    availability_zone       = "eu-west-1a"
+    availability_zone       = var.availability_zone_public
     map_public_ip_on_launch = true
     
     tags = {
@@ -48,7 +48,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
     vpc_id                  = aws_vpc.mi_vpc.id
     cidr_block              = var.private_subnet_cidr
-    availability_zone       = "eu-west-1b"
+    availability_zone       = var.availability_zone_private
     map_public_ip_on_launch = false
     
     tags = {

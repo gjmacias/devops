@@ -1,10 +1,12 @@
 # Genera un par de claves RSA
 resource "tls_private_key" "bastion" {
-    algorithm = "ED25519"
+    algorithm = "RSA"
+    rsa_bits  = 4096
 }
 
 resource "tls_private_key" "private_ec2" {
-    algorithm = "ED25519"
+    algorithm = "RSA"
+    rsa_bits  = 4096
 }
 
 
@@ -23,12 +25,12 @@ resource "aws_key_pair" "private_ec2" {
 
 resource "local_file" "bastion_private_key" {
     content  = tls_private_key.bastion.private_key_pem
-    filename = "${path.module}/bastion-key.pem"
+    filename = "${path.module}/${var.bastion_key_pair_name}.pem"
     file_permission = "0600"
 }
 
 resource "local_file" "private_ec2_private_key" {
     content  = tls_private_key.private_ec2.private_key_pem
-    filename = "${path.module}/private-key.pem"
+    filename = "${path.module}/${var.private_ec2_key_pair_name}.pem"
     file_permission = "0600"
 }

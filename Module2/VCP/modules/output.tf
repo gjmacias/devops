@@ -38,7 +38,7 @@ output "nat_gateway_public_ip" {
 # AMI used for the EC2 instances
 output "ami_used" {
   description = "AMI used for the EC2 instances"
-  value       = data.aws_ami.amazon_linux.id
+  value       = var.ami_id
 }
 
 
@@ -62,7 +62,12 @@ output "private_route_table_id" {
 
 
 # SSH connection details for the bastion host
-output "ssh_bastion_command" {
-    description = "SSH command for connecting to the bastion host"
-    value = "ssh -i ${aws_key_pair.bastion.key_name}.pem ec2-user@${aws_instance.bastion.public_ip}"
+output "bastion_private_key_path" {
+  description = "Path to the bastion private key file"
+  value       = "${path.module}/${var.bastion_key_pair_name}.pem"
+}
+
+output "private_ec2_private_key_path" {
+  description = "Path to the private EC2 private key file"
+  value       = "${path.module}/${var.private_ec2_key_pair_name}.pem"
 }
