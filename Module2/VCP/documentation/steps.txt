@@ -1,20 +1,9 @@
-
----------------------------------------------
--   INICIATE BUCKET TO USE IN THE PRACTICE  -
----------------------------------------------
-cd S3-setup
-
-terraform init
-terraform apply -var-file="backend.tfvars"
-
-cd ..
-
 ---------------------------------------------
 -           INICIATE PRACTICE               -
 ---------------------------------------------
 
-terraform init -backend-config="./enviromentals/backend.hcl"
-terraform plan -var-file="./enviromentals/terraform.tfvars"
+terraform init
+terraform plan
 terraform apply -var-file="./enviromentals/terraform.tfvars"
 
 ---------------------------------------------
@@ -22,17 +11,6 @@ terraform apply -var-file="./enviromentals/terraform.tfvars"
 ---------------------------------------------
 
 terraform destroy -auto-approve -var-file="./enviromentals/terraform.tfvars"
-
----------------------------------------------
--               DELETE BUCKET               -
----------------------------------------------
-
-cd S3-setup
-
-terraform init
-terraform destroy -var-file="backend.tfvars"
-
-cd ..
 
 ---------------------------------------------
 -          DELETE TERRAFORM STUFF           -
