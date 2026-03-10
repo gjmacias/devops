@@ -1,0 +1,24 @@
+
+cd S3-setup
+
+terraform init
+terraform apply -var-file="backend.tfvars"
+
+cd ..
+
+terraform init -backend-config="./enviromentals/backend.hcl"
+terraform plan -var-file="./enviromentals/terraform.tfvars"
+terraform apply -var-file="./enviromentals/terraform.tfvars"
+
+terraform destroy -auto-approve -var-file="./enviromentals/terraform.tfvars"
+
+
+
+cd S3-setup
+
+terraform init
+terraform destroy -var-file="backend.tfvars"
+
+cd ..
+
+rm -rf **/.terraform*
