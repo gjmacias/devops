@@ -55,7 +55,7 @@
         ],
         "properties": {
           "hardwareProfile": {
-            "vmSize": "Standard_B1ls"
+            "vmSize": "Standard_D2s"
           },
           "storageProfile": {
             "imageReference": {
