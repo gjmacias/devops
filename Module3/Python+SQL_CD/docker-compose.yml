@@ -1,0 +1,24 @@
+services:
+  database:
+    container_name: database
+    build:
+      context:      ./containers/database
+    restart:        always
+    networks:       [webapp-network]
+    env_file:       ./containers/database/src/.env
+  server:
+    container_name: server
+    build:
+      context:      ./containers/server
+    ports:          [8080:80]
+    networks:       [webapp-network]
+    depends_on:     [database]
+
+
+################################################################################
+# NETWORK CONFIGURATION
+################################################################################
+
+networks:
+  webapp-network:
+    driver: bridge  # Internal network for service communication

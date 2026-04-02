@@ -1,0 +1,3 @@
+[submodule "Module3/Module3/Django-CI"]
+	path = Module3/Module3/Django-CI
+	url = https://github.com/gjmacias/Django-CI
