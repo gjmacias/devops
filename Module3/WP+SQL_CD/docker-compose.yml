@@ -6,14 +6,15 @@ services:
     restart:        always
     networks:       [webapp-network]
     env_file:       ./containers/database/src/.env
-  server:
-    container_name: server
+  service:
+    container_name: service
     build:
-      context:      ./containers/server
+      context:      ./containers/service
     restart:        always
     ports:          [8080:80]
     networks:       [webapp-network]
     depends_on:     [database]
+    env_file:       ./containers/service/src/.env
 
 
 ################################################################################
